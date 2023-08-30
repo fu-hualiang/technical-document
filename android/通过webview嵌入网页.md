@@ -5,6 +5,52 @@
 在 android 视图下修改文件
 
 ```xml
+<!-- res/layout/activity_main.xml -->
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+    <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+```
+
+```kotlin
+// java/.../.../.../MainActivity.kt
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.webkit.WebView
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val webView = findViewById<WebView>(R.id.webview)
+        // 允许 js
+        webView.settings.javaScriptEnabled = true
+        // 允许放缩，未测试
+        webView.settings.builtInZoomControls = true
+        // 允许存储，未测试
+        webView.settings.domStorageEnabled = true
+
+        // 加载网页url
+        webView.loadUrl("http://fellowship.fuhualiang.club");
+    }
+}
+```
+
+
+```xml
 <!-- manifests/AndroidManifest.xml -->
 
 <?xml version="1.0" encoding="utf-8"?>
@@ -41,30 +87,3 @@
 
 </manifest>
 ```
-
-```kotlin
-// java/.../.../.../MainActivity.kt
-
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.webkit.WebView
-
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        val webView = findViewById<WebView>(R.id.webview)
-        // 允许 js
-        webView.settings.javaScriptEnabled = true
-        // 允许放缩，未测试
-        webView.settings.builtInZoomControls = true
-        // 允许存储，未测试
-        webView.settings.domStorageEnabled = true
-
-        // 加载网页url
-        webView.loadUrl("http://fellowship.fuhualiang.club");
-    }
-}
-```
-
