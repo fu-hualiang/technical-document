@@ -48,18 +48,56 @@ pnpm create vite my-vue-app --template vue
 
 
 
-### *修改 tsconfig.json
+### 修改 tsconfig.json
 
 ```json
-
+{
+  "compilerOptions": {
+    ...,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    ...,
+  },
+  ...,
+}
 ```
 
 
 
-### *修改 vite.config.ts
+### 修改 vite.config.ts
 
 ```typescript
+import { defineConfig, loadEnv } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import path from 'path';
+import process from 'process';
 
+// https://vitejs.dev/config/
+export default defineConfig(({ command, mode }) => {
+  const env = loadEnv(mode, process.cwd());
+  return {
+    plugins: [vue()],
+    resolve: {
+      alias: {
+        '@': path.resolve('./src'),
+      },
+      extensions: ['.ts', '.js'],
+    },
+    server: {
+      proxy: {
+        '/api': {
+          target: env.VITE_API_BASE_URL,
+          changeOrigin: true,
+          rewrite: (path) => path.replace('/api', ''),
+        },
+      },
+    },
+  };
+});
 ```
 
 

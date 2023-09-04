@@ -15,6 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
+    
+    <!-- 添加 WebView -->
     <WebView
             android:id="@+id/webview"
             android:layout_width="match_parent"
