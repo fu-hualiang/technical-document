@@ -1,8 +1,5 @@
-package com.example.lighthouse.utils.result;
+package com.elegrp.contract.util.result;
 
-import lombok.Data;
-
-@Data
 public class Result<T> {
     private Integer code;
     private String msg;
@@ -17,12 +14,23 @@ public class Result<T> {
         this.data = data;
     }
 
+    public Result(ResultEnum resultEnum, String msg, T data) {
+        this.code = resultEnum.code;
+        this.msg = msg;
+        this.data = data;
+    }
+
     public Integer getCode() {
         return code;
     }
 
-    public Result setCode(Integer code) {
+    public Result<T> setCode(Integer code) {
         this.code = code;
+        return this;
+    }
+
+    public Result<T> setCode(ResultEnum resultEnum) {
+        this.code = resultEnum.code;
         return this;
     }
 
@@ -30,7 +38,7 @@ public class Result<T> {
         return msg;
     }
 
-    public Result setMsg(String msg) {
+    public Result<T> setMsg(String msg) {
         this.msg = msg;
         return this;
     }
@@ -39,22 +47,8 @@ public class Result<T> {
         return data;
     }
 
-    public Result setData(T data) {
+    public Result<T> setData(T data) {
         this.data = data;
-        return this;
-    }
-
-    @Override
-    public String toString() {
-        return "Result{" +
-                "code=" + code +
-                ", msg='" + msg + '\'' +
-                ", data=" + data +
-                '}';
-    }
-
-    public Result setCode(ResultEnum resultEnum) {
-        this.code = resultEnum.code;
         return this;
     }
 }
